@@ -24,22 +24,22 @@ export class AppComponent implements OnInit {
         console.log(error.status);
       });
 
-    // this.http.get('https://api.github.com/users/tomagi').subscribe((data: any) => {
-    //   console.log(data.login);
-    // },
-    //   error => {
-    //     console.log(error.status);
-    //   });
+    this.http.get('https://api.github.com/users/tomagi').subscribe((data: any) => {
+      console.log(data.login);
+    },
+      error => {
+        console.log(error.status);
+      });
 
-    // this.http.post('https://jsonplaceholder.typicode.com/posts',
-    //   { firstName: 'T', lastName: 'G', time: new Date().toString() })
-    //   .subscribe(
-    //   data => {
-    //     console.log(data);
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    //   );
+    this.http.post('https://jsonplaceholder.typicode.com/posts',
+      { firstName: 'T', lastName: 'G', time: new Date().toString() })
+      .subscribe(  
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+      );
   }
 }

@@ -77,6 +77,10 @@ export interface IHttpResponse {
   url: string;
 }
 
+// export interface IDashboardResponse {
+//   data: any;
+// }
+
 @Injectable()
 export class MegadashInterceptor implements HttpInterceptor {
 
@@ -86,30 +90,31 @@ export class MegadashInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('interceptor');
-    // return next.handle(request);
 
     return next.handle(request).do((event: HttpEvent<any>) => {
 
       if (event instanceof HttpRequest) {
+        console.log('request');
         let authReq = request.clone({
-          // will be replaced with getUserToken
+          // will be replaced with getUserToken()
           headers: request.headers.set('Authorization', 'token 430adea6b1c19a776103982663b0fa2d6b82a49f'),
         });
         return next.handle(authReq);
       } else if (event instanceof HttpResponse) {
         console.log('response');
+        // what to do?
       }
-    }, (error) => {
-      if (error instanceof HttpErrorResponse) {
-        console.log(error);
-        switch (error.status) {
+    }).catch(response => {
+      if (response instanceof HttpErrorResponse) {
+        switch (response.status) {
           case 401:
-            // redirect to login page
+            // redirect to login page?
             break;
           case 404:
             // message to user?
             break;
+          default:
+            return Observable.throw(response.error);
         }
       }
     });
